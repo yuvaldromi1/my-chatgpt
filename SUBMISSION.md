@@ -26,27 +26,37 @@
 
 ## GitHub
 
-1. צור repository חדש ב-GitHub: https://github.com/new  
-   - שם מומלץ: `My-ChatGPT`  
-   - Public או Private לפי דרישות הקורס  
-   - **אל** תסמן "Add a README" (כבר קיים בפרויקט)
-2. מהתיקייה `Yuval Dromi` הרץ:
+1. התחבר ל-GitHub (פעם אחת):
    ```bash
-   git remote add origin https://github.com/yuvaldromi1/My-ChatGPT.git
+   gh auth login
+   ```
+2. צור repository והעלה:
+   ```bash
+   cd "C:\Projects\Yuval Dromi"
+   gh repo create My-ChatGPT --public --source=. --remote=origin --push
+   ```
+   אם ה-repo כבר קיים:
+   ```bash
    git push -u origin main
    ```
-   (אם `origin` כבר קיים: `git push -u origin main` בלבד)
-3. ודא שהקישור ב-`README.md` תואם ל-repository האמיתי.
+3. ודא שהקישור ב-`README.md` תואם: https://github.com/yuvaldromi1/My-ChatGPT
 
-> **סטטוס:** ה-remote כבר מוגדר מקומית. נשאר ליצור את ה-repository ב-GitHub ולהריץ `git push`.
+> **סטטוס:** יש להריץ `gh auth login` ואז `git push` (דורש התחברות GitHub של התלמיד).
 
-## קובץ ZIP מוכן
+## קובץ ZIP מוכן להגשה
 
-נוצר קובץ הגשה נקי (בלי `node_modules`, `venv`, `.env`):
+`C:\Projects\Yuval Dromi.zip`
 
-`C:\Projects\Yuval-Dromi-Submission.zip`
+מבנה אחרי חילוץ:
+```
+Yuval Dromi/
+├── Database/
+├── Backend/
+├── Frontend/
+└── README.md
+```
 
-עותק תיקייה נקייה (לפני ZIP): `C:\Projects\Yuval-Dromi-Submission`
+בלי: `node_modules`, `venv`, `.env`, `server.log`
 
 ## בדיקה מהירה לבודק
 
