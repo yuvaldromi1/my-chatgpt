@@ -55,7 +55,21 @@ export default function Home() {
     try {
       const reply = await sendMessage(conversationId, text)
       setMessages((prev) => [...prev, { role: reply.role, content: reply.content }])
-    } catch {
+    } catch (err) {
+      // שיחה ישנה ב-sessionStorage שלא קיימת עוד ב-MongoDB
+      if (err.response?.status === 404) {
+        sessionStorage.removeItem(STORAGE_KEY)
+        try {
+          const id = await createConversation()
+          setConversationId(id)
+          sessionStorage.setItem(STORAGE_KEY, id)
+          const reply = await sendMessage(id, text)
+          setMessages((prev) => [...prev, { role: reply.role, content: reply.content }])
+          return
+        } catch {
+          // נופל להודעת השגיאה הכללית למטה
+        }
+      }
       setMessages((prev) => [
         ...prev,
         { role: 'assistant', content: 'שגיאה: לא ניתן לקבל תשובה מהשרת.' },

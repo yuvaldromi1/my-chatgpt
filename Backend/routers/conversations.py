@@ -87,6 +87,11 @@ async def add_message(conversation_id: str, message: MessageIn):
 async def get_messages(conversation_id: str):
     """שליפת היסטוריית שיחה (אופציונלי)."""
     oid = _parse_id(conversation_id)
+
+    conversation = await conversations_collection.find_one({"_id": oid})
+    if not conversation:
+        raise HTTPException(status_code=404, detail="Conversation not found")
+
     history_docs = (
         await messages_collection.find({"conversationId": oid})
         .sort("createdAt", 1)
