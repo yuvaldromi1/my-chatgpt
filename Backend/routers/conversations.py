@@ -62,7 +62,13 @@ async def add_message(conversation_id: str, message: MessageIn):
     history = [{"role": d["role"], "content": d["content"]} for d in history_docs]
 
     # 3) קריאה ל-OpenAI מצד השרת
-    assistant_content = get_chat_response(history)
+    try:
+        assistant_content = get_chat_response(history)
+    except Exception as exc:
+        raise HTTPException(
+            status_code=502,
+            detail=f"OpenAI request failed: {exc}",
+        )
 
     # 4) שמירת תשובת הצ'אט
     await messages_collection.insert_one(

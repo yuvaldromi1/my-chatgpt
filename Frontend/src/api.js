@@ -17,3 +17,8 @@ export async function sendMessage(conversationId, content) {
   )
   return data // { role, content }
 }
+
+export async function getMessages(conversationId) {
+  const { data } = await api.get(`/conversations/${conversationId}/messages`)
+  return data // [{ role, content }, ...]
+}

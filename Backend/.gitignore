@@ -1,6 +1,9 @@
 # סודות - לעולם לא לעלות ל-GitHub
 .env
 
+# לוגים
+*.log
+
 # Python
 __pycache__/
 *.pyc

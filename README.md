@@ -8,7 +8,7 @@
 
 ## קישור ל-GitHub
 
-> 🔗 כאן יש להוסיף את הקישור ל-repository לאחר ההעלאה ל-GitHub.
+> 🔗 https://github.com/yuvaldromi1/My-ChatGPT
 
 ## מבנה הפרויקט
 
@@ -31,6 +31,10 @@ Yuval Dromi/
 
 ### 1) מסד נתונים
 ודא ש-MongoDB מותקן ורץ מקומית (ברירת מחדל: `mongodb://localhost:27017`).
+לשחזור נתוני הדוגמה מההגשה: ראה [Database/README.md](Database/README.md).
+
+### Frontend — שחזור שיחה
+בטעינת הדף, האפליקציה משחזרת את השיחה האחרונה מ-`sessionStorage` באמצעות `GET /api/conversations/{id}/messages`.
 
 ### 2) Backend
 ```bash

@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
-import { createConversation, sendMessage } from '../api.js'
+import { createConversation, getMessages, sendMessage } from '../api.js'
 import ChatWindow from '../components/ChatWindow.jsx'
 import MessageInput from '../components/MessageInput.jsx'
+
+const STORAGE_KEY = 'chatgpt_conversationId'
 
 export default function Home() {
   const [conversationId, setConversationId] = useState(null)
@@ -11,17 +13,32 @@ export default function Home() {
   async function startNewConversation() {
     setMessages([])
     setConversationId(null)
+    sessionStorage.removeItem(STORAGE_KEY)
     try {
       const id = await createConversation()
       setConversationId(id)
+      sessionStorage.setItem(STORAGE_KEY, id)
     } catch {
       // אם השרת לא זמין, נציג הודעה בעת השליחה
     }
   }
 
-  // ב-Refresh מתחילים שיחה חדשה (אין חובה לשחזר את הקודמת)
   useEffect(() => {
-    startNewConversation()
+    async function initConversation() {
+      const savedId = sessionStorage.getItem(STORAGE_KEY)
+      if (savedId) {
+        try {
+          const history = await getMessages(savedId)
+          setConversationId(savedId)
+          setMessages(history)
+          return
+        } catch {
+          sessionStorage.removeItem(STORAGE_KEY)
+        }
+      }
+      await startNewConversation()
+    }
+    initConversation()
   }, [])
 
   async function handleSend(text) {

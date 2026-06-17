@@ -9,3 +9,4 @@ dist/
 
 # לוגים
 npm-debug.log*
+vite.log
