@@ -1,0 +1,76 @@
+{
+  "info": {
+    "name": "My ChatGPT API",
+    "description": "אוסף בקשות לבדיקת ה-REST API של פרויקט הצ'אט (FastAPI + MongoDB + OpenAI).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8000" },
+    { "key": "conversationId", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Create Conversation",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "// שומר את ה-conversationId למשתנה האוסף לשימוש בבקשות הבאות",
+              "var data = pm.response.json();",
+              "if (data.conversationId) {",
+              "    pm.collectionVariables.set('conversationId', data.conversationId);",
+              "}",
+              "pm.test('status is 200', function () {",
+              "    pm.response.to.have.status(200);",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/conversations",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "conversations"]
+        },
+        "description": "פתיחת שיחה חדשה. מחזיר conversationId."
+      }
+    },
+    {
+      "name": "Send Message",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"content\": \"שלום! מי אתה?\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/conversations/{{conversationId}}/messages",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "conversations", "{{conversationId}}", "messages"]
+        },
+        "description": "שליחת הודעת משתמש וקבלת תשובת הצ'אט. שולח את ההודעה לשיחה שנפתחה."
+      }
+    },
+    {
+      "name": "Get Messages",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/conversations/{{conversationId}}/messages",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "conversations", "{{conversationId}}", "messages"]
+        },
+        "description": "שליפת כל ההודעות בשיחה לפי סדר כרונולוגי."
+      }
+    }
+  ]
+}

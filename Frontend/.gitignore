@@ -1,0 +1,11 @@
+# תלויות - יש למחוק לפני הגשה
+node_modules/
+
+# build
+dist/
+
+# סודות
+.env
+
+# לוגים
+npm-debug.log*

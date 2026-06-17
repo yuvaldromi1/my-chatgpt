@@ -1,0 +1,8 @@
+# סודות - לעולם לא לעלות ל-GitHub
+.env
+
+# Python
+__pycache__/
+*.pyc
+venv/
+.venv/

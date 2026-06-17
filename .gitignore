@@ -1,0 +1,20 @@
+# ===== סודות - לעולם לא לעלות ל-GitHub =====
+.env
+**/.env
+
+# ===== Python (Backend) =====
+__pycache__/
+*.pyc
+venv/
+.venv/
+
+# ===== Node (Frontend) =====
+node_modules/
+dist/
+npm-debug.log*
+
+# ===== מערכת =====
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
