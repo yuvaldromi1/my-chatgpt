@@ -26,9 +26,27 @@
 
 ## GitHub
 
-1. צור repository בשם `My-ChatGPT` (או עדכן את הקישור ב-`README.md`).
-2. העלה את הקוד: `git remote add origin ...` ואז `git push -u origin main`.
-3. ודא שהקישור ב-README תואם ל-repository האמיתי.
+1. צור repository חדש ב-GitHub: https://github.com/new  
+   - שם מומלץ: `My-ChatGPT`  
+   - Public או Private לפי דרישות הקורס  
+   - **אל** תסמן "Add a README" (כבר קיים בפרויקט)
+2. מהתיקייה `Yuval Dromi` הרץ:
+   ```bash
+   git remote add origin https://github.com/yuvaldromi1/My-ChatGPT.git
+   git push -u origin main
+   ```
+   (אם `origin` כבר קיים: `git push -u origin main` בלבד)
+3. ודא שהקישור ב-`README.md` תואם ל-repository האמיתי.
+
+> **סטטוס:** ה-remote כבר מוגדר מקומית. נשאר ליצור את ה-repository ב-GitHub ולהריץ `git push`.
+
+## קובץ ZIP מוכן
+
+נוצר קובץ הגשה נקי (בלי `node_modules`, `venv`, `.env`):
+
+`C:\Projects\Yuval-Dromi-Submission.zip`
+
+עותק תיקייה נקייה (לפני ZIP): `C:\Projects\Yuval-Dromi-Submission`
 
 ## בדיקה מהירה לבודק
 
