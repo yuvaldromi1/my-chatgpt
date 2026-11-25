@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 from bson import ObjectId
 from pymongo import MongoClient
@@ -13,7 +13,7 @@ messages = db["messages"]
 conversations.delete_many({})
 messages.delete_many({})
 
-now = datetime.now(timezone.utc)
+now = datetime.now(UTC)
 conv_id = ObjectId()
 
 conversations.insert_one(
@@ -43,7 +43,7 @@ sample_messages = [
 ]
 
 for msg in sample_messages:
-    created = datetime.fromtimestamp(now.timestamp() + msg["offset_sec"], tz=timezone.utc)
+    created = datetime.fromtimestamp(now.timestamp() + msg["offset_sec"], tz=UTC)
     messages.insert_one(
         {
             "conversationId": conv_id,

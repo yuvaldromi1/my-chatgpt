@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 from bson import ObjectId
 from bson.errors import InvalidId
@@ -12,14 +12,14 @@ router = APIRouter(prefix="/api/conversations", tags=["conversations"])
 
 
 def _now():
-    return datetime.now(timezone.utc)
+    return datetime.now(UTC)
 
 
 def _parse_id(conversation_id: str) -> ObjectId:
     try:
         return ObjectId(conversation_id)
     except (InvalidId, TypeError):
-        raise HTTPException(status_code=400, detail="Invalid conversation id")
+        raise HTTPException(status_code=400, detail="Invalid conversation id") from None
 
 
 @router.post("", response_model=ConversationOut)
@@ -63,7 +63,7 @@ async def add_message(conversation_id: str, message: MessageIn):
         raise HTTPException(
             status_code=502,
             detail=f"OpenAI request failed: {exc}",
-        )
+        ) from exc
 
     # 4)
     await messages_collection.insert_one(
