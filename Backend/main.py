@@ -3,9 +3,8 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from routers import conversations
 
-app = FastAPI(title="My ChatGPT API")
+app = FastAPI(title="Chat API")
 
-# מאפשר ל-React (פורט 5173) לדבר עם השרת (פורט 8000)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
@@ -19,4 +18,4 @@ app.include_router(conversations.router)
 
 @app.get("/")
 def root():
-    return {"status": "ok", "service": "My ChatGPT API"}
+    return {"status": "ok", "service": "Chat API"}

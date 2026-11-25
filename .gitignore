@@ -1,19 +1,19 @@
-# ===== סודות - לעולם לא לעלות ל-GitHub =====
+
 .env
 **/.env
 
-# ===== Python (Backend) =====
+# Python (Backend)
 __pycache__/
 *.pyc
 venv/
 .venv/
 
-# ===== Node (Frontend) =====
+# Node (Frontend) 
 node_modules/
 dist/
 npm-debug.log*
 
-# ===== מערכת =====
+# System 
 .DS_Store
 Thumbs.db
 .vscode/

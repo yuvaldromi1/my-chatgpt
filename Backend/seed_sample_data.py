@@ -1,4 +1,3 @@
-"""Insert sample conversation data for Database export (submission)."""
 from datetime import datetime, timezone
 
 from bson import ObjectId
@@ -11,7 +10,6 @@ db = client["chatgpt_db"]
 conversations = db["conversations"]
 messages = db["messages"]
 
-# Clear existing sample data for a clean export
 conversations.delete_many({})
 messages.delete_many({})
 
@@ -27,18 +25,18 @@ conversations.insert_one(
 )
 
 sample_messages = [
-    {"role": "user", "content": "שלום! מי אתה?", "offset_sec": 0},
+    {"role": "user", "content": "Hello! Who are you?", "offset_sec": 0},
     {
         "role": "assistant",
-        "content": "שלום! אני עוזר וירטואלי. איך אוכל לעזור לך היום?",
+        "content": "Hello! I am a virtual assistant. How can I help you today?",
         "offset_sec": 2,
     },
-    {"role": "user", "content": "מה זה פרויקט Full Stack?", "offset_sec": 5},
+    {"role": "user", "content": "What is a Full Stack project?", "offset_sec": 5},
     {
         "role": "assistant",
         "content": (
-            "פרויקט Full Stack משלב פיתוח צד לקוח (Frontend) וצד שרת (Backend), "
-            "לעיתים עם מסד נתונים — כמו באפליקציית הצ'אט הזו."
+            "A Full Stack project combines client-side development (Frontend) and "
+            "server-side development (Backend), often with a database - like this chat application."
         ),
         "offset_sec": 8,
     },

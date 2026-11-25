@@ -24,7 +24,6 @@ def _parse_id(conversation_id: str) -> ObjectId:
 
 @router.post("", response_model=ConversationOut)
 async def create_conversation():
-    """פותח שיחה חדשה ומחזיר את המזהה שלה."""
     result = await conversations_collection.insert_one(
         {"title": "New conversation", "createdAt": _now()}
     )
@@ -33,17 +32,13 @@ async def create_conversation():
 
 @router.post("/{conversation_id}/messages", response_model=MessageOut)
 async def add_message(conversation_id: str, message: MessageIn):
-    """
-    שומר את הודעת המשתמש, שולח את כל ההיסטוריה ל-OpenAI,
-    שומר את תשובת הצ'אט ומחזיר אותה.
-    """
     oid = _parse_id(conversation_id)
 
     conversation = await conversations_collection.find_one({"_id": oid})
     if not conversation:
         raise HTTPException(status_code=404, detail="Conversation not found")
 
-    # 1) שמירת הודעת המשתמש
+    # 1)
     await messages_collection.insert_one(
         {
             "conversationId": oid,
@@ -53,7 +48,7 @@ async def add_message(conversation_id: str, message: MessageIn):
         }
     )
 
-    # 2) שליפת כל ההיסטוריה לפי סדר כרונולוגי (שמירת ההקשר)
+    # 2)
     history_docs = (
         await messages_collection.find({"conversationId": oid})
         .sort("createdAt", 1)
@@ -61,7 +56,7 @@ async def add_message(conversation_id: str, message: MessageIn):
     )
     history = [{"role": d["role"], "content": d["content"]} for d in history_docs]
 
-    # 3) קריאה ל-OpenAI מצד השרת
+    # 3)
     try:
         assistant_content = get_chat_response(history)
     except Exception as exc:
@@ -70,7 +65,7 @@ async def add_message(conversation_id: str, message: MessageIn):
             detail=f"OpenAI request failed: {exc}",
         )
 
-    # 4) שמירת תשובת הצ'אט
+    # 4)
     await messages_collection.insert_one(
         {
             "conversationId": oid,
@@ -85,7 +80,6 @@ async def add_message(conversation_id: str, message: MessageIn):
 
 @router.get("/{conversation_id}/messages", response_model=list[MessageOut])
 async def get_messages(conversation_id: str):
-    """שליפת היסטוריית שיחה (אופציונלי)."""
     oid = _parse_id(conversation_id)
 
     conversation = await conversations_collection.find_one({"_id": oid})
