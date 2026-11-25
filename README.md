@@ -1,5 +1,7 @@
 # My ChatGPT
 
+[![CI](https://github.com/yuvaldromi1/my-chatgpt/actions/workflows/ci.yml/badge.svg)](https://github.com/yuvaldromi1/my-chatgpt/actions/workflows/ci.yml)
+
 A ChatGPT-style web app: the user holds an ongoing conversation with an AI model, and every conversation is saved to a database. Final project of the John Bryce Full Stack (Python) program.
 
 ![Chat screen](docs/screenshot.png)
@@ -17,6 +19,7 @@ A ChatGPT-style web app: the user holds an ongoing conversation with an AI model
 **Backend:** Python · FastAPI · Motor (async MongoDB driver) · OpenAI SDK · Pydantic
 **Frontend:** React · Vite · React Router · Axios
 **Database:** MongoDB
+**Testing & CI:** pytest · FastAPI TestClient · mongomock-motor · GitHub Actions
 
 ## Architecture
 
@@ -65,6 +68,18 @@ Interactive API docs: `http://localhost:8000/docs`
    npm run dev
    ```
 4. Open `http://localhost:5173`
+
+## Tests & CI
+
+```bash
+cd Backend
+pip install -r requirements-dev.txt
+pytest
+```
+
+11 API tests run against an in-memory MongoDB with the OpenAI call mocked, so they need no database, no API key and no network. They cover creating conversations, saving the history in order, sending the full history to the model, isolation between conversations and error handling (400, 404, 422, 502).
+
+On every push, GitHub Actions runs the backend tests and builds the frontend.
 
 ## What I Learned
 
